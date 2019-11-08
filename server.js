@@ -12,13 +12,17 @@ const app = express();
 
 
 //Body-parser middlewear
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // DB config
 const db = require('./config/keys').mongoURI;
 
 // Connect to MongoDB
+
+mongoose.set('useUnifiedTopology', true);
+mongoose.set('useNewUrlParser', true);
+
 mongoose
   .connect(db)
   .then(() => console.log('Database connected'))
@@ -32,9 +36,9 @@ require('./config/passport')(passport);
 
 
 
-app.use('/routes/api/users', users);
-app.use('/routes/api/profile', profile);
-app.use('/routes/api/posts', posts);
+app.use('/api/users', users);
+app.use('/api/profile', profile);
+app.use('/api/posts', posts);
 
 const port = process.env.PORT || 5000;
 
